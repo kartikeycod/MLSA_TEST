@@ -71,8 +71,8 @@ function updateJumpButtons() {
 /** Timer and auto-submit logic */
 function startTimer() {
   const startTime = Number(localStorage.getItem('testStartTime'));
-  if (!startTime) {
-    alert('Test start time not found. Redirecting to instructions.');
+  if (!startTime || isNaN(startTime)) {
+    alert('Test start time missing or invalid. Please restart the test.');
     window.location.href = 'instructions.html';
     return;
   }
@@ -117,7 +117,12 @@ async function submitTest() {
   }
 
   const startTime = Number(localStorage.getItem('testStartTime'));
-  const timeTakenMinutes = Math.floor((Date.now() - startTime) / 60000);
+  if (!startTime || isNaN(startTime)) {
+    alert('Test start time missing or invalid when submitting. Please restart the test.');
+    window.location.href = 'instructions.html';
+    return;
+  }
+  const timeTakenMs = Date.now() - startTime; // Time taken in milliseconds
 
   try {
     const { getFirestore, doc, updateDoc } = await import("https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js");
@@ -146,11 +151,11 @@ async function submitTest() {
     await updateDoc(userRef, {
       answers,
       score,
-      time_taken: timeTakenMinutes,
+      time_taken: timeTakenMs,
       submitted: true
     });
 
-    alert(`Test submitted successfully!\n`);
+    alert(`Test submitted successfully!\nYour score is ${score}`);
     window.location.href = 'index.html';  // Redirect to login page
 
   } catch (error) {
