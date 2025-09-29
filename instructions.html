@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quiz Instructions</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f6fa;
+      color: #2f3640;
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .container {
+      background: white;
+      padding: 2rem 3rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      width: 400px;
+      max-width: 90%;
+    }
+    h1 {
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    ul {
+      list-style: disc inside;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    button {
+      display: block;
+      width: 100%;
+      padding: 0.7rem;
+      background-color: #40739e;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #273c75;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Instructions</h1>
+    <ul>
+      <li>The test consists of 30 questions.</li>
+      <li>You have 30 minutes to complete the test.</li>
+      <li>You can navigate between questions freely.</li>
+      <li>Your answers will be auto-submitted when time expires.</li>
+      <li>Each correct answer awards 4 marks; no negative marking.</li>
+    </ul>
+    <button id="startTestBtn">Start Test</button>
+  </div>
+
+  <script type="module">
+    document.getElementById('startTestBtn').addEventListener('click', () => {
+      localStorage.setItem('testStartTime', Date.now());
+      window.location.href = 'quiz.html';
+    });
+  </script>
+</body>
+</html>
