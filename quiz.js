@@ -1,3 +1,4 @@
+
 const questions = [
   { id: 1, question: "Question 1: The capital of India?", options: ["New Delhi", "Mumbai", "Chennai", "Kolkata"], correctAnswer: "New Delhi" },
   { id: 2, question: "Question 2: Who is the inventor of the telephone?", options: ["Tesla", "Bell", "Edison", "Newton"], correctAnswer: "Bell" },
@@ -9,12 +10,11 @@ const questions = [
   { id: 8, question: "Question 8: What is the chemical symbol for Gold?", options: ["Au", "Ag", "Gd", "Go"], correctAnswer: "Au" },
   { id: 9, question: "Question 9: What’s the largest ocean?", options: ["Atlantic", "Indian", "Pacific", "Arctic"], correctAnswer: "Pacific" },
   { id: 10, question: "Question 10: What programming language is this app likely built in?", options: ["C++", "Python", "JavaScript", "Ruby"], correctAnswer: "JavaScript" },
-  //... Add more questions up to 30 if needed
 ];
 
 let currentQuestionIndex = 0;
 const answers = {};
-const totalTime = 30 * 60 * 1000; // 30 minutes in ms
+const totalTime = 30 * 60 * 1000; // 30 minutes
 let timerInterval;
 let tabSwitchCount = 0;
 
@@ -50,14 +50,14 @@ function saveAnswer() {
   }
 }
 
-/** Update jump buttons and mark answered ones as grey */
+/** Update jump buttons */
 function updateJumpButtons() {
   jumpContainer.innerHTML = '';
   questions.forEach((q, i) => {
     const btn = document.createElement('button');
     btn.className = 'jump-btn';
     if (i === currentQuestionIndex) btn.classList.add('active');
-    if (answers[q.id]) btn.classList.add('attempted'); // Mark answered question buttons
+    if (answers[q.id]) btn.classList.add('attempted');
     btn.textContent = i + 1;
     btn.addEventListener('click', () => {
       saveAnswer();
@@ -68,7 +68,7 @@ function updateJumpButtons() {
   });
 }
 
-/** Timer and auto-submit logic */
+/** Timer */
 function startTimer() {
   const startTime = Number(localStorage.getItem('testStartTime'));
   if (!startTime || isNaN(startTime)) {
@@ -106,7 +106,7 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 
-/** Submit test: save answers, score, time taken */
+/** Submit test */
 async function submitTest() {
   saveAnswer();
   clearInterval(timerInterval);
@@ -122,7 +122,14 @@ async function submitTest() {
     window.location.href = 'instructions.html';
     return;
   }
-  const timeTakenMs = Date.now() - startTime; // Time taken in milliseconds
+  
+  // Calculate time taken
+  const timeTakenMs = Date.now() - startTime;
+  const mins = Math.floor(timeTakenMs / 60000);
+  const secs = Math.floor((timeTakenMs % 60000) / 1000);
+  const formattedTime = `${mins}m ${secs}s`;
+
+  console.log("Submitting:", { answers, score, formattedTime });
 
   try {
     const { getFirestore, doc, updateDoc } = await import("https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js");
@@ -151,12 +158,12 @@ async function submitTest() {
     await updateDoc(userRef, {
       answers,
       score,
-      time_taken: timeTakenMs,
+      time_taken: formattedTime, // ✅ human-readable time
       submitted: true
     });
 
-    alert(`Test submitted successfully!\nYour score is ${score}`);
-    window.location.href = 'index.html';  // Redirect to login page
+    alert(`Test submitted successfully!`);
+    window.location.href = 'conclusion.html';
 
   } catch (error) {
     console.error("Error submitting test:", error);
@@ -184,6 +191,7 @@ submitBtn.addEventListener('click', () => {
   }
 });
 
-// Initializations
+// Initial load
 renderQuestion();
 startTimer();
+
