@@ -1,6 +1,9 @@
+body,html{
+  background:linear-gradient(rgb(45, 45, 164),rgb(151, 180, 238));
+}
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f5f6fa;
+  /* background: #f5f6fa; */
   margin: 0;
   padding: 0;
   display: flex;
@@ -13,7 +16,7 @@ body {
 
 .container {
   width: 700px;
-  background: white;
+  background: rgb(171, 113, 113);
   padding: 20px 30px;
   border-radius: 10px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);

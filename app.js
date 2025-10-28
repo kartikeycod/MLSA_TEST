@@ -27,8 +27,22 @@ form.addEventListener('submit', async (event) => {
   const rollNo = document.getElementById('rollNo').value.trim();
   const phone = document.getElementById('phone').value.trim();
 
+  // ✅ Validation Rules
+  const emailPattern = /^[a-zA-Z0-9._%+-]+@kiet\.edu$/;
+  const phonePattern = /^[0-9]{10}$/;
+
   if (!name || !email || !branch || !rollNo || !phone) {
     alert('Please fill all fields');
+    return;
+  }
+
+  if (!emailPattern.test(email)) {
+    alert('Enter kiet email');
+    return;
+  }
+
+  if (!phonePattern.test(phone)) {
+    alert('Phone number must be exactly 10 digits');
     return;
   }
 
@@ -39,10 +53,11 @@ form.addEventListener('submit', async (event) => {
 
     if (userSnap.exists()) {
       alert('User already logged in. Redirecting to instructions...');
-      window.location.href = 'instructions.html'; // you'll create this next
+      window.location.href = 'instructions.html';
       return;
     }
 
+    // Save new user data
     await setDoc(userRef, {
       name,
       email,
@@ -54,6 +69,7 @@ form.addEventListener('submit', async (event) => {
       time_taken: 0,
       submitted: false
     });
+    localStorage.setItem("rollNo", rollNo);
 
     alert('User registered successfully! Redirecting to instructions...');
     window.location.href = 'instructions.html';

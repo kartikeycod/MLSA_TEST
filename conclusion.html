@@ -174,5 +174,16 @@
             Please check your email regularly for updates
         </div>
     </div>
+    
+       <script>
+
+  history.pushState(null, "", location.href);
+  window.onpopstate = function () {
+    history.pushState(null, "", location.href);
+  };
+
+
+
+    </script>
 </body>
 </html>

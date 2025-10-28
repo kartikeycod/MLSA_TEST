@@ -7,6 +7,12 @@
 <link rel="stylesheet" href="quiz.css" />
 </head>
 <body>
+  <script>
+if (sessionStorage.getItem("testSubmitted") === "yes") {
+    window.location.replace("conclusion.html");
+}
+</script>
+  
   <div class="container">
     <header>
       <h1>Quiz Test</h1>

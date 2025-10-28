@@ -4,30 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>User Onboarding</title>
-  <style>
-    body{
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #455ab2;
-      color: #2f3640;
-      height: 100vh;
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  </style>
+ 
+ 
   <link rel="stylesheet" href="style.css">
 </head>
 <body >
     <div>
-  <h1>Candidate Login</h1>
+  <h1 style="color: white;">Candidate Login</h1>
   <br><br>
   <form id="userForm">
     <label>Name: <input type="text" id="name" required /></label><br />
     <label>Email: <input type="email" id="email" required /></label><br />
     <label>Branch: <input type="text" id="branch" required /></label><br />
     <label>Roll No: <input type="text" id="rollNo" required /></label><br />
-    <label>Phone: <input type="tel" id="phone" required /></label><br />
+    <label>Phone(10 digits): <input type="tel" id="phone" required /></label><br />
     <button type="submit">Login</button>
   </form>
   </div>
