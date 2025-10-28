@@ -4,11 +4,11 @@ const questions = [
 
   { id: 2, question: "The average of 8 numbers is 15. If one number is removed, the average becomes 14. Find the number removed.", options: ["20", "22", "14", "21"], correctAnswer: "22" },
 
-  { id: 3, question: "A train passes a platform 200 m long in 30 seconds and a man standing on the platform in 18 seconds. Find the length of the train.", options: ["150 m", "180 m", "200 m", "120 m"], correctAnswer: "150 m" },
+  { id: 3, question: "A train passes a platform 200 m long in 30 seconds and a man standing on the platform in 18 seconds. Find the length of the train.", options: ["150 m", "180 m", "300 m", "120 m"], correctAnswer: "300 m" },
 
   { id: 4, question: "A sum of money doubles itself in 8 years at simple interest. Find the rate of interest per annum.", options: ["12.5%", "15%", "10%", "20%"], correctAnswer: "12.5%" },
 
-  { id: 5, question: "Two pipes can fill a tank in 10 minutes and 15 minutes respectively. A third pipe empties it in 30 minutes. How long will it take to fill the tank if all three are opened together?", options: ["8 min", "9 min", "10 min", "12 min"], correctAnswer: "9 min" },
+  { id: 5, question: "Two pipes can fill a tank in 10 minutes and 15 minutes respectively. A third pipe empties it in 30 minutes. How long will it take to fill the tank if all three are opened together?", options: ["8 min", "7.5 min", "10 min", "12 min"], correctAnswer: "7.5 min" },
 
   { id: 6, question: "If 40% of A = 50% of B, find A : B.", options: ["4 : 5", "5 : 4", "2 : 3", "3 : 2"], correctAnswer: "5 : 4" },
 
@@ -20,7 +20,7 @@ const questions = [
 
   { id: 10, question: "A milkman adds water to milk in the ratio 3:1 and sells at cost price. Find his gain percent.", options: ["20%", "25%", "30%", "33⅓%"], correctAnswer: "33⅓%" },
 
-  { id: 11, question: "A and B can complete a task in 12 and 18 days respectively. They start together, but A leaves after 3 days. In how many more days will B complete the remaining work?", options: ["8", "10", "12", "9"], correctAnswer: "10" },
+  { id: 11, question: "A and B can complete a task in 12 and 18 days respectively. They start together, but A leaves after 3 days. In how many more days will B complete the remaining work?", options: ["8", "10", "12", "9"], correctAnswer: "9" },
 
   { id: 12, question: "The simple interest on ₹2500 for 4 years at 8% per annum is equal to compound interest on ₹2000 for 2 years at the same rate. Find the CI.", options: ["₹320", "₹324.8", "₹330", "₹315"], correctAnswer: "₹324.8" },
 
