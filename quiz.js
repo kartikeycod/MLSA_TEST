@@ -39,26 +39,57 @@ const questions = [
   { id: 19, question: "A sum becomes ₹2420 in 2 years and ₹2662 in 3 years at CI. Find the rate.", options: ["8%", "9%", "10%", "12%"], correctAnswer: "10%" },
 
   { id: 20, question: "A tower is 50 m high. Angle of depression of a car changes from 30° to 60° as it approaches. Distance travelled?", options: ["57.7 m", "86.6 m", "100 m", "43.3 m"], correctAnswer: "86.6 m" },
+  
+  { id: 21, question: "Find the total number of diagonals in a polygon with 12 sides.", 
+    options: ["54", "60", "66", "72"], 
+    correctAnswer: "54" 
+  },
 
-  { id: 21, question: "Choose the synonym of Adversity:", options: ["Difficulty", "Adventure", "Fortune", "Prosperity"], correctAnswer: "Difficulty" },
+  { id: 22, question: "A card is drawn from a deck of 52 cards. Find the probability of getting a king or a heart.", 
+    options: ["4/13", "17/52", "16/52", "13/52"], 
+    correctAnswer: "4/13" 
+  },
 
-  { id: 22, question: "Choose the antonym of Mitigate:", options: ["Reduce", "Increase", "Ease", "Calm"], correctAnswer: "Increase" },
+  { id: 23, question: "In a mixture of 60 litres where milk:water = 2:1, how much water should be added to make ratio 1:1?", 
+    options: ["10 L", "15 L", "20 L", "30 L"], 
+    correctAnswer: "20 L" 
+  },
 
-  { id: 23, question: "Identify the grammatically correct sentence:", options: ["She don't like ice cream.", "She doesn’t likes ice cream.", "She doesn’t like ice cream.", "She not like ice cream."], correctAnswer: "She doesn’t like ice cream." },
+  { id: 24, question: "A number when divided by 7 gives remainder 5. What will be the remainder when its square is divided by 7?", 
+    options: ["4", "3", "2", "1"], 
+    correctAnswer: "4" 
+  },
 
-  { id: 24, question: "Fill in the blank: He was confident _____ his victory.", options: ["of", "for", "on", "with"], correctAnswer: "of" },
+  { id: 25, question: "If 3 log₁₀2 + 2 log₁₀3 = x, find x.", 
+    options: ["log₁₀24", "log₁₀12", "log₁₀18", "log₁₀72"], 
+    correctAnswer: "log₁₀72" 
+  },
 
-  { id: 25, question: "Arrange the words logically: 1. College 2. Job 3. School 4. Post Graduation", options: ["3, 1, 4, 2", "1, 2, 3, 4", "3, 4, 1, 2", "4, 1, 3, 2"], correctAnswer: "3, 1, 4, 2" },
+  { id: 26, question: "The sum of digits of a two-digit number is 12. Reversing digits increases number by 18. Find the number.", 
+    options: ["57", "66", "84", "93"], 
+    correctAnswer: "57" 
+  },
 
-  { id: 26, question: "▲, ▲▲, ▲▲▲, ?", options: ["▲▲▲▲", "▲▲▲▲▲", "▲▲▲▲▲▲", "▲▲▲"], correctAnswer: "▲▲▲▲" },
+  { id: 27, question: "A cube’s side is increased by 10%. Find the % increase in volume.", 
+    options: ["30%", "33.1%", "10%", "25%"], 
+    correctAnswer: "33.1%" 
+  },
 
-  { id: 27, question: "Which shape is different?", options: ["Square", "Rhombus", "Rectangle", "Cube"], correctAnswer: "Cube" },
+  { id: 28, question: "In how many ways can 5 identical balls be placed into 3 different boxes?", 
+    options: ["15", "18", "21", "20"], 
+    correctAnswer: "21" 
+  },
 
-  { id: 28, question: "A figure rotates 45° clockwise each step. If first faces north, 5th faces:", options: ["East", "West", "South-East", "South-West"], correctAnswer: "South-West" },
+  { id: 29, question: "A 3-digit number has sum of digits = 9. Adding 198 reverses its digits. Find the number.", 
+    options: ["243", "252", "333", "324"], 
+    correctAnswer: "243" 
+  },
 
-  { id: 29, question: "Paper punched thrice symmetrically. When opened, how many holes?", options: ["6", "8", "12", "10"], correctAnswer: "12" },
+  { id: 30, question: "In how many ways can the letters of MATHEMATICS be arranged?", 
+    options: ["4989600", "498960", "990", "2494800"], 
+    correctAnswer: "4989600" 
+  },
 
-  { id: 30, question: "Count rectangles in 4×3 grid.", options: ["24", "36", "60", "72"], correctAnswer: "60" }
 ];
 
 let currentQuestionIndex = 0;
