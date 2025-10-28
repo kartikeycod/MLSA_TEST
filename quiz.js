@@ -39,7 +39,7 @@ const questions = [
   { id: 19, question: "A sum becomes ₹2420 in 2 years and ₹2662 in 3 years at CI. Find the rate.", options: ["8%", "9%", "10%", "12%"], correctAnswer: "10%" },
 
   { id: 20, question: "A tower is 50 m high. Angle of depression of a car changes from 30° to 60° as it approaches. Distance travelled?", options: ["57.7 m", "86.6 m", "100 m", "43.3 m"], correctAnswer: "86.6 m" },
-  
+
   { id: 21, question: "Find the total number of diagonals in a polygon with 12 sides.", 
     options: ["54", "60", "66", "72"], 
     correctAnswer: "54" 
@@ -81,8 +81,8 @@ const questions = [
   },
 
   { id: 29, question: "A 3-digit number has sum of digits = 9. Adding 198 reverses its digits. Find the number.", 
-    options: ["243", "252", "333", "324"], 
-    correctAnswer: "243" 
+    options: ["234", "252", "333", "324"], 
+    correctAnswer: "234" 
   },
 
   { id: 30, question: "In how many ways can the letters of MATHEMATICS be arranged?", 
