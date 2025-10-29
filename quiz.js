@@ -1,22 +1,31 @@
-// ✅ Prevent BACK button during TEST
-history.pushState(null, null, location.href);
-window.onpopstate = function () {
-  tabSwitchCount++;
-  alert(`Warning: Navigation attempt detected (${tabSwitchCount}/3)`);
+/// ✅ Ultimate Back Button Prevention — works on Chrome, Edge, Firefox
+(function lockBackButton() {
+  // Push two dummy states to confuse back navigation
+  history.pushState(null, "", location.href);
+  history.pushState(null, "", location.href);
 
-  if (tabSwitchCount > 3) {
-    alert("Exceeded max allowed navigation attempts. Submitting test.");
-    submitTest();
-  }
+  window.addEventListener("popstate", function (event) {
+    // Always go forward in history to block back navigation
+    history.go(1);
 
-  history.pushState(null, null, location.href);
-};
+    // Increment warning counter
+    tabSwitchCount++;
+    alert(`⚠️ Warning: Navigation attempt detected (${tabSwitchCount}/3)`);
 
-window.addEventListener("beforeunload", function (e) {
-  // Prevent exiting accidentally
-  e.preventDefault();
-  e.returnValue = "";
-});
+    if (tabSwitchCount > 3) {
+      alert("Exceeded max allowed navigation attempts. Submitting test.");
+      submitTest();
+    }
+  });
+
+  // Prevent accidental page unload (reload/close)
+  window.addEventListener("beforeunload", function (e) {
+    e.preventDefault();
+    e.returnValue = "";
+  });
+})();
+
+
 
 const questions = [
   { id: 1, question: "A man saves ₹480 every month. After saving for 6 months, he invests half of his total savings at 10% p.a. for 2 years. Find the interest earned.", options: ["₹288", "₹144", "₹240", "₹120"], correctAnswer: "₹288" },
@@ -53,9 +62,10 @@ const questions = [
 
 let currentQuestionIndex = 0;
 const answers = {};
-const totalTime = 40 * 60 * 1000; 
+const totalTime = 40 * 60 * 1000;
 let timerInterval;
 let tabSwitchCount = 0;
+let testSubmitting = false; // ✅ Prevent triggers during submit
 
 const questionContainer = document.getElementById('questionContainer');
 const prevBtn = document.getElementById('prevBtn');
@@ -127,14 +137,14 @@ function startTimer() {
   }, 1000);
 }
 
-// ✅ Ultra-Stable Tab/Window Switch Detection (No Double Count)
+// ✅ Improved Tab Switch Detection (ignores while submitting)
 let lastTriggerType = null;
 let lastTriggerTime = 0;
 
 function handleFocusLoss(reason) {
-  const now = Date.now();
+  if (testSubmitting) return; // 🟢 Skip if user is submitting test
 
-  // Ignore if fired again within 1200ms from same action type
+  const now = Date.now();
   if (reason === lastTriggerType && now - lastTriggerTime < 1200) return;
 
   lastTriggerType = reason;
@@ -149,19 +159,19 @@ function handleFocusLoss(reason) {
   }
 }
 
-// Trigger when switching browser tabs / minimizing
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) handleFocusLoss("Tab switch");
 });
 
-// Trigger when using Alt+Tab / switching apps / focus loss
 window.addEventListener("blur", () => {
-  // Avoid double fire if tab already hidden
   if (!document.hidden) handleFocusLoss("Window focus lost / Alt+Tab");
 });
 
-
+// ✅ Submit Test Function (no extra alerts)
 async function submitTest() {
+  if (testSubmitting) return;
+  testSubmitting = true; // ✅ prevent double trigger
+
   saveAnswer();
   clearInterval(timerInterval);
 
@@ -193,22 +203,25 @@ async function submitTest() {
     const db = getFirestore(app);
 
     const rollNo = localStorage.getItem("rollNo");
-if (!rollNo) return alert("Session expired! Please login again.");
-
+    if (!rollNo) {
+      alert("Session expired! Please login again.");
+      testSubmitting = false;
+      return;
+    }
 
     const userRef = doc(db, "users", rollNo);
     await updateDoc(userRef, { answers, score, time_taken: formattedTime, submitted: true });
 
-    // ✅ Mark Test as Finished
     localStorage.setItem("test_submitted", "true");
-
-    alert("Test submitted successfully!");
     sessionStorage.setItem("testSubmitted", "yes");
 
+    // ✅ Redirect silently (no extra alerts)
     window.location.href = 'conclusion.html';
 
   } catch (error) {
+    console.error(error);
     alert("Failed to submit test. Try again.");
+    testSubmitting = false;
   }
 }
 
@@ -217,19 +230,18 @@ prevBtn.addEventListener('click', () => {
   if (currentQuestionIndex > 0) currentQuestionIndex--;
   renderQuestion();
 });
+
 nextBtn.addEventListener('click', () => {
   saveAnswer();
   if (currentQuestionIndex < questions.length - 1) currentQuestionIndex++;
   renderQuestion();
 });
+
 submitBtn.addEventListener('click', () => {
-  if (confirm("Are you sure you want to submit the test?")) {
-    submitTest();
-  }
+  if (confirm("Are you sure you want to submit the test?")) submitTest();
 });
 
 renderQuestion();
 startTimer();
 
 window.history.replaceState({}, document.title, window.location.href);
-
