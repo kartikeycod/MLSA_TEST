@@ -176,14 +176,30 @@
     </div>
     
        <script>
-
-  history.pushState(null, "", location.href);
-  window.onpopstate = function () {
+  // Disable back navigation completely once on this page
+  (function () {
+    // Push a new state into history
     history.pushState(null, "", location.href);
-  };
 
+    // Whenever user tries to go back, re-push state
+    window.onpopstate = function () {
+      history.pushState(null, "", location.href);
+    };
 
+    // Optional: prevent navigation via backspace key or swipe
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Backspace" && e.target === document.body) {
+        e.preventDefault();
+      }
+    });
 
-    </script>
+    // Extra: disable browser caching to avoid back-navigation reloads
+    window.addEventListener("pageshow", function (event) {
+      if (event.persisted) {
+        window.location.reload();
+      }
+    });
+  })();
+</script>
 </body>
 </html>
