@@ -236,7 +236,7 @@ async function submitTest() {
     sessionStorage.setItem("testSubmitted", "yes");
 
     // ✅ Redirect silently (no extra alerts)
-    window.location.href = 'conclusion.html';
+   window.location.replace("conclusion.html");
 
   } catch (error) {
     console.error(error);

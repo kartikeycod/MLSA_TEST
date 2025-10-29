@@ -174,7 +174,12 @@
             Please check your email regularly for updates
         </div>
     </div>
-    
+    <script>
+  history.replaceState(null, "", location.href);
+  history.pushState(null, "", location.href);
+  window.onpopstate = () => history.pushState(null, "", location.href);
+</script>
+
      <script>
   // --- Layer 1: Replace instead of push ---
   // Replaces the current history entry so there’s no “previous page” left
@@ -200,6 +205,7 @@
     }
   });
 </script>
+
 
 </body>
 </html>
