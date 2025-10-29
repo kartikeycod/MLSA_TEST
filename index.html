@@ -35,6 +35,11 @@
       <button type="submit">Login</button>
     </form>
   </div>
+<script>
+  if (localStorage.getItem("accessGranted") !== "true") {
+    window.location.href = "password.html";
+  }
+</script>
 
   <!-- Firebase SDKs -->
   <script type="module" src="app.js"></script>
