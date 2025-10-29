@@ -1,16 +1,20 @@
-/// ✅ Ultimate Back Button Prevention — works on Chrome, Edge, Firefox
-(function lockBackButton() {
-  // Push two dummy states to confuse back navigation
+// ✅ Fully blocks back navigation and prevents reloads in all browsers
+(function disableBackNavigation() {
+  // Push dummy states
   history.pushState(null, "", location.href);
   history.pushState(null, "", location.href);
 
-  window.addEventListener("popstate", function (event) {
-    // Always go forward in history to block back navigation
-    history.go(1);
+  // Detect back/forward navigation attempts
+  window.addEventListener("popstate", function (e) {
+    // Push again to lock user in
+    history.pushState(null, "", location.href);
 
-    // Increment warning counter
+    // Prevent browser back navigation
+    e.preventDefault();
+
+    // Increase counter and handle violation
     tabSwitchCount++;
-    alert(`⚠️ Warning: Navigation attempt detected (${tabSwitchCount}/3)`);
+    alert(`⚠️ Back navigation detected (${tabSwitchCount}/3)`);
 
     if (tabSwitchCount > 3) {
       alert("Exceeded max allowed navigation attempts. Submitting test.");
@@ -18,13 +22,29 @@
     }
   });
 
-  // Prevent accidental page unload (reload/close)
+  // Disable keyboard shortcuts for back/forward (Alt+← / Alt+→)
+  window.addEventListener("keydown", function (e) {
+    if (
+      (e.key === "ArrowLeft" && e.altKey) ||
+      (e.key === "ArrowRight" && e.altKey) ||
+      e.key === "Backspace"
+    ) {
+      e.preventDefault();
+      tabSwitchCount++;
+      alert(`⚠️ Navigation key blocked (${tabSwitchCount}/3)`);
+      if (tabSwitchCount > 3) {
+        alert("Exceeded max allowed navigation attempts. Submitting test.");
+        submitTest();
+      }
+    }
+  });
+
+  // Prevent accidental refresh or close
   window.addEventListener("beforeunload", function (e) {
     e.preventDefault();
     e.returnValue = "";
   });
 })();
-
 
 
 const questions = [
