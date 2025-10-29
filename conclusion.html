@@ -175,31 +175,31 @@
         </div>
     </div>
     
-       <script>
-  // Disable back navigation completely once on this page
-  (function () {
-    // Push a new state into history
+     <script>
+  // --- Layer 1: Replace instead of push ---
+  // Replaces the current history entry so there’s no “previous page” left
+  history.replaceState(null, "", location.href);
+  history.pushState(null, "", location.href);
+
+  // --- Layer 2: Trap back navigation ---
+  window.addEventListener("popstate", function () {
     history.pushState(null, "", location.href);
+  });
 
-    // Whenever user tries to go back, re-push state
-    window.onpopstate = function () {
+  // --- Layer 3: Handle browser cache restoration ---
+  window.addEventListener("pageshow", function (event) {
+    if (event.persisted) {
       history.pushState(null, "", location.href);
-    };
+    }
+  });
 
-    // Optional: prevent navigation via backspace key or swipe
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Backspace" && e.target === document.body) {
-        e.preventDefault();
-      }
-    });
-
-    // Extra: disable browser caching to avoid back-navigation reloads
-    window.addEventListener("pageshow", function (event) {
-      if (event.persisted) {
-        window.location.reload();
-      }
-    });
-  })();
+  // --- Layer 4: Prevent back navigation via keyboard ---
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Backspace" && e.target === document.body) {
+      e.preventDefault();
+    }
+  });
 </script>
+
 </body>
 </html>
