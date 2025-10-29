@@ -139,6 +139,7 @@ document.addEventListener('visibilitychange', () => {
   }
 });
 
+
 async function submitTest() {
   saveAnswer();
   clearInterval(timerInterval);
