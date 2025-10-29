@@ -1,25 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>User Onboarding</title>
- 
- 
   <link rel="stylesheet" href="style.css">
 </head>
-<body >
-    <div>
-  <h1 style="color: white;">Candidate Login</h1>
-  <br><br>
-  <form id="userForm">
-    <label>Name: <input type="text" id="name" required /></label><br />
-    <label>Email: <input type="email" id="email" required /></label><br />
-    <label>Branch: <input type="text" id="branch" required /></label><br />
-    <label>Roll No: <input type="text" id="rollNo" required /></label><br />
-    <label>Phone(10 digits): <input type="tel" id="phone" required /></label><br />
-    <button type="submit">Login</button>
-  </form>
+<body>
+  <div>
+    <h1 style="color: white;">Candidate Login</h1>
+    <br><br>
+    <form id="userForm">
+      <label>Name: <input type="text" id="name" required /></label><br />
+      <label>Email: <input type="email" id="email" required /></label><br />
+
+      <label>Branch:
+        <select id="branch" required>
+          <option value="" disabled selected>Select your branch</option>
+          <option value="CSE">CSE</option>
+          <option value="CS">CS</option>
+          <option value="CSIT">CSIT</option>
+          <option value="IT">IT</option>
+          <option value="CSE(AI)">CSE(AI)</option>
+          <option value="CSE(AI&ML)">CSE(AI&ML)</option>
+          <option value="CSE(Cybersecurity)">CSE(Cybersecurity)</option>
+          <option value="CSE(Data Science)">CSE(Data Science)</option>
+          <option value="ELCE">ELCE</option>
+          <option value="ECE">ECE</option>
+        </select>
+      </label><br />
+
+      <label>Roll No: <input type="text" id="rollNo" required /></label><br />
+      <label>Phone No (10 digits): <input type="tel" id="phone" pattern="[0-9]{10}" required /></label><br />
+      <button type="submit">Login</button>
+    </form>
   </div>
 
   <!-- Firebase SDKs -->

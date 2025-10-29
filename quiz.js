@@ -208,3 +208,6 @@ submitBtn.addEventListener('click', () => {
 
 renderQuestion();
 startTimer();
+
+window.history.replaceState({}, document.title, window.location.href);
+
