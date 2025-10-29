@@ -127,16 +127,37 @@ function startTimer() {
   }, 1000);
 }
 
-document.addEventListener('visibilitychange', () => {
-  if (document.hidden) {
-    tabSwitchCount++;
-    if (tabSwitchCount > 3) {
-      alert('Exceeded max allowed tab switches. Submitting test.');
-      submitTest();
-    } else {
-      alert(`Warning: Tab switch detected (${tabSwitchCount}/3)`);
-    }
+// ✅ Ultra-Stable Tab/Window Switch Detection (No Double Count)
+let lastTriggerType = null;
+let lastTriggerTime = 0;
+
+function handleFocusLoss(reason) {
+  const now = Date.now();
+
+  // Ignore if fired again within 1200ms from same action type
+  if (reason === lastTriggerType && now - lastTriggerTime < 1200) return;
+
+  lastTriggerType = reason;
+  lastTriggerTime = now;
+
+  tabSwitchCount++;
+  if (tabSwitchCount > 3) {
+    alert("Exceeded max allowed tab/window switches. Submitting test.");
+    submitTest();
+  } else {
+    alert(`⚠️ Warning: ${reason} detected (${tabSwitchCount}/3)`);
   }
+}
+
+// Trigger when switching browser tabs / minimizing
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) handleFocusLoss("Tab switch");
+});
+
+// Trigger when using Alt+Tab / switching apps / focus loss
+window.addEventListener("blur", () => {
+  // Avoid double fire if tab already hidden
+  if (!document.hidden) handleFocusLoss("Window focus lost / Alt+Tab");
 });
 
 

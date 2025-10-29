@@ -1,8 +1,8 @@
-// Import Firebase initialization and Firestore
+// ✅ Import Firebase initialization and Firestore modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-firestore.js";
 
-// Your Firebase Config
+// ✅ Your Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDzsZ6oLvhb1Utlf-u9vp4OYic6smCGNLs",
   authDomain: "mlsa-test.firebaseapp.com",
@@ -13,51 +13,54 @@ const firebaseConfig = {
   measurementId: "G-07ZGVSSVJ5"
 };
 
-// Initialize Firebase and Firestore
+// ✅ Initialize Firebase and Firestore
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const form = document.getElementById('userForm');
-form.addEventListener('submit', async (event) => {
+// ✅ Handle Form Submission
+const form = document.getElementById("userForm");
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const name = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const branch = document.getElementById('branch').value.trim();
-  const rollNo = document.getElementById('rollNo').value.trim();
-  const phone = document.getElementById('phone').value.trim();
+  // Collect input values
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const branch = document.getElementById("branch").value.trim();
+  const rollNo = document.getElementById("rollNo").value.trim();
+  const phone = document.getElementById("phone").value.trim();
 
-  // ✅ Validation Rules
+  // ✅ Validation Patterns
   const emailPattern = /^[a-zA-Z0-9._%+-]+@kiet\.edu$/;
   const phonePattern = /^[0-9]{10}$/;
 
+  // ✅ Basic Validation
   if (!name || !email || !branch || !rollNo || !phone) {
-    alert('Please fill all fields');
+    alert("⚠️ Please fill all fields before proceeding.");
     return;
   }
 
   if (!emailPattern.test(email)) {
-    alert('Enter kiet email');
+    alert("⚠️ Please use your KIET email (example@kiet.edu).");
     return;
   }
 
   if (!phonePattern.test(phone)) {
-    alert('Phone number must be exactly 10 digits');
+    alert("⚠️ Phone number must be exactly 10 digits.");
     return;
   }
 
   try {
-    // Check if user document exists
-    const userRef = doc(db, 'users', rollNo);
+    // ✅ Check if the roll number already exists in Firestore
+    const userRef = doc(db, "users", rollNo);
     const userSnap = await getDoc(userRef);
 
     if (userSnap.exists()) {
-      alert('User already logged in. Redirecting to instructions...');
-      window.location.href = 'instructions.html';
+      // 🚫 User already registered or attempted test
+      alert("⚠️ This roll number has already submitted the test. Multiple attempts are not allowed.");
       return;
     }
 
-    // Save new user data
+    // ✅ Otherwise, save the new user data
     await setDoc(userRef, {
       name,
       email,
@@ -69,13 +72,17 @@ form.addEventListener('submit', async (event) => {
       time_taken: 0,
       submitted: false
     });
+
+    // ✅ Store roll number locally for session tracking
     localStorage.setItem("rollNo", rollNo);
 
-    alert('User registered successfully! Redirecting to instructions...');
-    window.location.href = 'instructions.html';
+    alert("✅ Registration successful! Redirecting to instructions...");
+    setTimeout(() => {
+      window.location.href = "instructions.html";
+    }, 1200);
 
   } catch (error) {
-    console.error('Error adding user:', error);
-    alert('Failed to register user');
+    console.error("❌ Firestore Error:", error);
+    alert("❌ Failed to register. Please check your internet connection or try again.");
   }
 });
